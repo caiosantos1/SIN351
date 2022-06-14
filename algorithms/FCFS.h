@@ -68,7 +68,26 @@ void fcfs_print_gantt_chart(Process *p, int len)
 
 void FCFS(Process *p, int len)
 {
-    printf("Implementar o FCFS");
+    int i;
+    int temp_espera = 0;
+    int temp_retorno = 0;
+    int temp_resposta = 0;
+    
+    // inicializando o processo
+    process_init(p,len);
+
+    // Função para ordenar por ordem de chegada
+    merge_sort_by_arrive_time(p,0,len);
+
+    //Fução para mostar o gráfico de gantt
+    fcfs_print_gantt_chart(p,len);
+
+    printf("\n\tAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)len);
+	printf("\tAverage Turnaround Time  : %-2.2lf\n", (double)total_turnaround_time / (double)len);
+	printf("\tAverage Response Time    : %-2.2lf\n\n", (double)total_response_time / (double)len);
+
+    //Imprime a tabela
+	print_table(p, len);
 }
 
 #endif

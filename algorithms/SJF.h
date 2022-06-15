@@ -137,7 +137,40 @@ void sjf_print_gantt_chart(Process *p, int len)
 
 
 void SJF(Process *p, int len){
-    printf("SJF - Implememtar e devolver no final, o tempo de espera, tempo de retorno e o tempo de resposta");
+    int i;
+    int temp_espera = 0;
+    int temp_retorno = 0;
+    int temp_resposta = 0;
+
+	// inicializando o processo
+	process_init(p,len);
+
+	// Função para ordenar por ordem de chegada
+	merge_sort_by_arrive_time(p,0,len);
+
+	//Clacular o tempo sjf
+	sjf_calculate_time(p,len);
+
+	for(i=0;i<len;i++){
+		p[i].return_time = p[i].turnaround_time + p[i].arrive_time;
+		p[i].response_time = p[i].waiting_time;
+		temp_espera = temp_espera + p[i].waiting_time;
+		temp_retorno += p[i].turnaround_time;
+		temp_resposta += p[i].response_time;
+	}
+	 printf(" Algoritmo SJF\n");
+
+	 quick_sort_by_return_time(p,len);
+
+	 //Fução para mostar o gráfico de gantt
+	 sjf_print_gantt_chart(p,len);
+
+	printf("\n\tAverage Waiting Time     : %-2.2lf\n", (double)temp_espera / (double)len);
+	printf("\tAverage Turnaround Time  : %-2.2lf\n", (double)temp_resposta / (double)len);
+	printf("\tAverage Response Time    : %-2.2lf\n\n", (double)temp_retorno / (double)len);
+
+	//Imprime a tabela
+	print_table(p,len);
 
 }
 

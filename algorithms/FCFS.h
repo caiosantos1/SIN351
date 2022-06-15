@@ -68,10 +68,12 @@ void fcfs_print_gantt_chart(Process *p, int len)
 
 void FCFS(Process *p, int len)
 {
+    //Declaração de Variáveis
     int i;
     int temp_espera = 0;
     int temp_retorno = 0;
     int temp_resposta = 0;
+    int tem_return = 0;
     
     // inicializando o processo
     process_init(p,len);
@@ -79,12 +81,21 @@ void FCFS(Process *p, int len)
     // Função para ordenar por ordem de chegada
     merge_sort_by_arrive_time(p,0,len);
 
+    p[0].response_time = p[0].burst;
+    p[0].turnaround_time = p[0].return_time;
+    p[0].response_time = 0;
+    p[0].waiting_time = 0;
+
+    temp_espera += p[0].response_time;
+    temp_espera += p[0].waiting_time;
+    temp_retorno += p[0].turnaround_time;
+    tem_return += p[0].burst;
     //Fução para mostar o gráfico de gantt
     fcfs_print_gantt_chart(p,len);
 
-    printf("\n\tAverage Waiting Time     : %-2.2lf\n", (double)total_waiting_time / (double)len);
-	printf("\tAverage Turnaround Time  : %-2.2lf\n", (double)total_turnaround_time / (double)len);
-	printf("\tAverage Response Time    : %-2.2lf\n\n", (double)total_response_time / (double)len);
+    printf("\n\tAverage Waiting Time     : %-2.2lf\n", (double)temp_espera / (double)len);
+	printf("\tAverage Turnaround Time  : %-2.2lf\n", (double)temp_resposta / (double)len);
+	printf("\tAverage Response Time    : %-2.2lf\n\n", (double)temp_retorno / (double)len);
 
     //Imprime a tabela
 	print_table(p, len);

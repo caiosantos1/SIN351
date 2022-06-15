@@ -353,7 +353,43 @@ void rr_print_gantt_chart(Process *p, int len, Quantum q)
 
 
 void RR(Process *p, int len, Quantum quantum) {
-    printf("Round-Robin: Implememtar e devolver no final, o tempo de espera, tempo de retorno e o tempo de resposta");
+    
+	int i;
+    int temp_espera = 0;
+    int temp_retorno = 0;
+    int temp_resposta = 0;
+
+	// inicializando o processo
+	process_init(p,len);
+
+	// Função para ordenar por ordem de chegada
+	merge_sort_by_arrive_time(p,0,len);
+
+	//Calcula o tempo de espera
+	rr_calculate_waiting_time(p,len,quantum);
+
+	//Calcula o tempo de temp_retorno
+	rr_calculate_turnaround_time(p,len,quantum);
+
+	for(i=0;i<len;i++){	
+		p[i].waiting_time = p[i].turnaround_time - p[i].burst;
+		p[i].return_time = p[i].arrive_time;
+		temp_espera += p[i].waiting_time;
+		temp_retorno += p[i].turnaround_time;
+		temp_resposta += p[i].response_time;
+	}
+
+	printf("Round Robein\n");
+	//Fução para mostar o gráfico de gantt
+	rr_print_gantt_chart(p,len,quantum);
+
+	printf("\n\tAverage Waiting Time     : %-2.2lf\n", (double)temp_espera / (double)len);
+	printf("\tAverage Turnaround Time  : %-2.2lf\n", (double)temp_resposta / (double)len);
+	printf("\tAverage Response Time    : %-2.2lf\n\n", (double)temp_retorno / (double)len);
+
+	//Printar a tabela
+	print_table(p,len);
+
 }
 
 #endif

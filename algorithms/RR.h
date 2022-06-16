@@ -369,7 +369,7 @@ void RR(Process *p, int len, Quantum quantum) {
 	rr_calculate_waiting_time(p,len,quantum);
 
 	//Calcula o tempo de temp_retorno
-	rr_calculate_turnaround_time(p,len,quantum);
+	rr_calculate_turnaround_time(p,len);
 
 	for(i=0;i<len;i++){	
 		p[i].waiting_time = p[i].turnaround_time - p[i].burst;

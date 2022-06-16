@@ -90,6 +90,18 @@ void FCFS(Process *p, int len)
     temp_espera += p[0].waiting_time;
     temp_retorno += p[0].turnaround_time;
     tem_return += p[0].burst;
+
+    for(i=0;i<len;i++){
+       
+        tem_return += p[i].burst;
+        temp_espera += p[i].waiting_time;
+        temp_retorno += p[i].turnaround_time;
+        temp_resposta += p[i].response_time;
+
+    }
+
+    printf("FCFS\n");
+
     //Fução para mostar o gráfico de gantt
     fcfs_print_gantt_chart(p,len);
 

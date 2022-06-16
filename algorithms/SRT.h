@@ -358,7 +358,7 @@ void srt_print_gantt_chart(Process *p, int len)
 }
 void SRT(Process *p, int len)
 {
-    printf("SRTN - Implememtar e devolver no final, o tempo de espera, tempo de retorno e o tempo de resposta");
+    
 }
 
 #endif
